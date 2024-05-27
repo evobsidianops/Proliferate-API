@@ -1,14 +1,14 @@
 from django.urls import path
-from knox import views as knox_views
+from knox.views import LogoutView
 
 from .views import CreateUser, CreateUserInfo, LoginView
 
 urlpatterns = [
-    path('user/', CreateUser.as_view(), name='user'),
-    path('detail/', CreateUserInfo.as_view(), name='detail')
+    path('api/register_user/', CreateUser.as_view(), name='user'),
+    path('api/create_user_info/', CreateUserInfo.as_view(), name='detail')
 ]
 
 urlpatterns += [
-     path('login/', LoginView.as_view(), name='knox_login'),
-     path('logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
-     path('logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),]
+     path('auth/login/', LoginView.as_view(), name='knox_login'),
+     path('auth/logout/', LogoutView.as_view(), name='knox_logout')
+]

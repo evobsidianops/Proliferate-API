@@ -7,7 +7,6 @@ import os
 import django
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-DJANGO_SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,10 +16,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = DJANGO_SECRET_KEY
+SECRET_KEY = 'django-insecure-^e#7%0yw6z3bon2=u)q@^0%8ej=t3x%%potz509mi=s6l#!7fy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -131,6 +130,8 @@ REST_KNOX = {
   'TOKEN_MODEL': 'knox.AuthToken',
 }
 
+LOGIN_URL = "auth/login/"
+
 SWAGGER_SETTINGS = {
      'DEFAULT_AUTO_SCHEMA_CLASS': 'drf_yasg.inspectors.SwaggerAutoSchema',
      'DEFAULT_FIELD_INSPECTORS': [
@@ -156,9 +157,11 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': getattr(django.conf.settings, 'LOGOUT_URL', None), 
 
     'SECURITY_DEFINITIONS': {
-        'basic': {
-            'type': 'basic'
-        }
+        'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+      }
     },
 
     'VALIDATOR_URL': '',
@@ -200,4 +203,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = "/login/"
+LOGIN_URL = "auth/login/"
